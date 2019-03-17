@@ -5,7 +5,7 @@ _POINTER_CONVERSION         = 0x00
 _POINTER_CONFIG             = 0x01
 
 _CONFIG_OS = {
-    'START'=0x8000
+    'START':0x8000
 }
 
 _CONFIG_MUX={
