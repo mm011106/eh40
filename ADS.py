@@ -55,7 +55,7 @@ _CONFIG_COMP_RANGE = {
 
 def readout(bus,address):
 #  !!! need to wait until the conversion is completed
-	raw = bus.read_i2c_block_data(address,_POINTER_CONFIG,2)
+	raw = bus.read_i2c_block_data(address,_POINTER_CONVERSION,2)
 	adc = raw[0] * 256 + raw[1]
 	if adc > 32767:
 		adc -= 65535
@@ -67,19 +67,21 @@ address = 0x48
 bus = SMBus(bus_number)
 
 if __name__ == '__main__':
-	ADC_config = _CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['CONTINUOUS']\
+	ADC_config = _CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['SINGLE']\
 	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] | _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
 
-	print "CONFIG CODE:", format(ADC_config, "04x")
+#	print "CONFIG CODE:", format(ADC_config, "04x")
 	command = [ADC_config>>8, ADC_config & 0xFF ]
-	print "CONFIG CODE:", format(command, "02x")
+	print "CONFIG CODE:", format(command[0], "02x"),format(command[1], "02x")
 
 
 
-	bus.write_i2c_block_data(address, 0x01, [0xD5, 0x83])
+#	bus.write_i2c_block_data(address, 0x01, [0xD5, 0x83])
+
+#	bus.write_i2c_block_data(address, 0x01, command)
 
 	while True:
-		bus.write_i2c_block_data(address, _POINTER_CONVERSION,[0xD5,0x83])
+		bus.write_i2c_block_data(address, _POINTER_CONFIG,command)
 
 		# data=bus.read_i2c_block_data(address,0x00,2)
 		# print data
