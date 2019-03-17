@@ -68,7 +68,7 @@ bus = SMBus(bus_number)
 
 if __name__ == '__main__':
 	ADC_config = _CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['SINGLE']\
-	| _CONFIG_RANGE['2V'] | _CONFIG_RATE[''] | _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
+	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] | _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
 
 	print ADC_config
 
