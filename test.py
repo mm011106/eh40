@@ -13,5 +13,6 @@ if __name__ == '__main__':
 	
 #	print bme280.readData(bus,bme280_address)
 	temperature, pressure, humidity = bme280.readData(bus, bme280_address)
+#	print bme280.digT
 
 	print temperature
