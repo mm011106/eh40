@@ -53,7 +53,22 @@ _CONFIG_COMP_RANGE = {
     'WIND':  0x0010
 }
 
-def readout(bus,address):
+
+def init(bus, address):
+#	insert code for ininitalize ADC
+	return 0
+
+def setCondition(bus, address, command):
+	bus.write_i2c_block_data(address, _POINTER_CONFIG,command)
+	return 0
+
+def readCondition(bus, address):
+	return condition
+
+def waitRady(bus, address):
+	return 0
+
+def readout(bus, address):
 #  !!! need to wait until the conversion is completed
 	raw = bus.read_i2c_block_data(address,_POINTER_CONVERSION,2)
 	adc = raw[0] * 256 + raw[1]
