@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
 	print "CONFIG CODE:", format(ADC_config, "04x")
 	command = [ADC_config>>8, ADC_config & 0xFF ]
-	print "CONFIG CODE:", command
+	print "CONFIG CODE:", format(command, "02x")
 
 
 
