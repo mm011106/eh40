@@ -70,7 +70,7 @@ if __name__ == '__main__':
 	ADC_config = _CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['CONTINUOUS']\
 	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] | _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
 
-	print "CONFIG CODE:",ADC_config
+	print "CONFIG CODE:", format(ADC_config, "04x")
 
 
 	bus.write_i2c_block_data(address, 0x01, [0xD5, 0x83])
