@@ -13,3 +13,6 @@
 - 参考URL　https://github.com/ControlEverythingCommunity/ADS1115/blob/master/Python/ADS1115.py
 - 参考URL　https://github.com/adafruit/Adafruit_CircuitPython_ADS1x15/blob/master/adafruit_ads1x15/ads1x15.py
   
+#### ADS1115 データシート
+https://cdn-shop.adafruit.com/datasheets/ads1115.pdf
+
