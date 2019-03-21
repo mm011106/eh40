@@ -58,7 +58,12 @@ def init(bus, address):
 #	insert code for ininitalize ADC
 	return 0
 
-def setCondition(bus, address, command):
+# def setCondition(bus, address, command):
+# 	bus.write_i2c_block_data(address, _POINTER_CONFIG,command)
+# 	return 0
+
+def setCondition(bus, address, config):
+	command = [config>>8, config & 0xFF ]
 	bus.write_i2c_block_data(address, _POINTER_CONFIG,command)
 	return 0
 
@@ -77,10 +82,6 @@ def readout(bus, address):
 		adc -= 65535
 	return adc
 
-# bus_number  = 1
-# address = 0x48
-#
-# bus = SMBus(bus_number)
 
 if __name__ == '__main__':
 
@@ -108,7 +109,7 @@ if __name__ == '__main__':
 
 	while True:
 
-		setCondition(bus, address, command)
+		setCondition(bus, address, ADC_config)
 		print '>', readCondition(bus, address)
 
 		print readout(bus,address)
