@@ -96,14 +96,6 @@ if __name__ == '__main__':
 	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] \
 	| _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
 
-#	print "CONFIG CODE:", format(ADC_config, "04x")
-	# command = [ADC_config>>8, ADC_config & 0xFF ]
-	# print "CONFIG CODE:", format(command[0], "02x"),format(command[1], "02x")
-
-#	bus.write_i2c_block_data(address, 0x01, [0xD5, 0x83])
-
-#	bus.write_i2c_block_data(address, 0x01, command)
-
 	while True:
 
 		setCondition(bus, address, ADC_config)
