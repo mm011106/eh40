@@ -63,7 +63,8 @@ def setCondition(bus, address, command):
 	return 0
 
 def readCondition(bus, address):
-	return bus.read_i2c_block_data(address, _POINTER_CONFIG,2)
+	rawData = bus.read_i2c_block_data(address, _POINTER_CONFIG,2)
+	return rawData[0] * 256 + rawData[1]
 
 def waitRady(bus, address):
 	return 0
@@ -76,12 +77,17 @@ def readout(bus, address):
 		adc -= 65535
 	return adc
 
-bus_number  = 1
-address = 0x48
-
-bus = SMBus(bus_number)
+# bus_number  = 1
+# address = 0x48
+#
+# bus = SMBus(bus_number)
 
 if __name__ == '__main__':
+
+	bus_number  = 1
+	address = 0x48
+
+	bus = SMBus(bus_number)
 
 	init(bus, address)
 
@@ -101,11 +107,10 @@ if __name__ == '__main__':
 #	bus.write_i2c_block_data(address, 0x01, command)
 
 	while True:
-#		bus.write_i2c_block_data(address, _POINTER_CONFIG,command)
+
 		setCondition(bus, address, command)
 		print '>', readCondition(bus, address)
-		print '>', readCondition(bus, address)
-		# data=bus.read_i2c_block_data(address,0x00,2)
-		# print data
+
 		print readout(bus,address)
+
 		sleep(0.5)
