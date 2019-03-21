@@ -67,14 +67,13 @@ def readCondition(bus, address):
 	rawData = bus.read_i2c_block_data(address, _POINTER_CONFIG,2)
 	return rawData[0] * 256 + rawData[1]
 
-def waitRady(bus, address):
+def waitReady(bus, address):
 	while True if readCondition(bus, address) >> 15 == 0 else False :
 		pass
 
 	return 0
 
 def readout(bus, address):
-#  !!! need to wait until the conversion is completed
 	waitReady(bus, address)
 	raw = bus.read_i2c_block_data(address,_POINTER_CONVERSION,2)
 	adc = raw[0] * 256 + raw[1]
@@ -108,7 +107,7 @@ if __name__ == '__main__':
 	while True:
 
 		setCondition(bus, address, ADC_config)
-		waitRady(bus, address)
+		waitReady(bus, address)
 
 		print '>', format(readCondition(bus, address), "04x")
 
