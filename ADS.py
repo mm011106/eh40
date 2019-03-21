@@ -63,7 +63,7 @@ def setCondition(bus, address, command):
 	return 0
 
 def readCondition(bus, address):
-	return condition
+	return bus.read_i2c_block_data(address, _POINTER_CONFIG,2)
 
 def waitRady(bus, address):
 	return 0
@@ -103,7 +103,8 @@ if __name__ == '__main__':
 	while True:
 #		bus.write_i2c_block_data(address, _POINTER_CONFIG,command)
 		setCondition(bus, address, command)
-
+		print '>', readCondition(bus, address)
+		print '>', readCondition(bus, address)
 		# data=bus.read_i2c_block_data(address,0x00,2)
 		# print data
 		print readout(bus,address)
