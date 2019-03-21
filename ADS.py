@@ -105,13 +105,11 @@ if __name__ == '__main__':
 
 		setCondition(bus, address, ADC_config)
 
-		ready = False
-		while not(ready):
-			state = readCondition(bus, address)
-			ready = (state[0] & 0x80) == 0x00
-			print ready
-			
-		print '>', readCondition(bus, address)
+		#print Ture if readCondition(bus, address) >> 15 == 1 else False
+		while True if readCondition(bus, address) >> 15 == 0 else False :
+			print "waiting.."
+	
+		print '>', format(readCondition(bus, address), "04x")
 
 		print readout(bus,address)
 
