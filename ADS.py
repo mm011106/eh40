@@ -68,6 +68,9 @@ def readCondition(bus, address):
 	return rawData[0] * 256 + rawData[1]
 
 def waitRady(bus, address):
+	while True if readCondition(bus, address) >> 15 == 0 else False :
+		pass
+
 	return 0
 
 def readout(bus, address):
@@ -105,10 +108,12 @@ if __name__ == '__main__':
 
 		setCondition(bus, address, ADC_config)
 
+		waitRady(bus, address)
+
 		#print Ture if readCondition(bus, address) >> 15 == 1 else False
-		while True if readCondition(bus, address) >> 15 == 0 else False :
-			print "waiting.."
-	
+#		while True if readCondition(bus, address) >> 15 == 0 else False :
+#			pass
+
 		print '>', format(readCondition(bus, address), "04x")
 
 		print readout(bus,address)
