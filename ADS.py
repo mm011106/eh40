@@ -82,6 +82,9 @@ address = 0x48
 bus = SMBus(bus_number)
 
 if __name__ == '__main__':
+
+	init(bus, address)
+
 	ADC_config = \
 	_CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['SINGLE'] \
 	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] \
@@ -98,7 +101,8 @@ if __name__ == '__main__':
 #	bus.write_i2c_block_data(address, 0x01, command)
 
 	while True:
-		bus.write_i2c_block_data(address, _POINTER_CONFIG,command)
+#		bus.write_i2c_block_data(address, _POINTER_CONFIG,command)
+		setCondition(bus, address, command)
 
 		# data=bus.read_i2c_block_data(address,0x00,2)
 		# print data
