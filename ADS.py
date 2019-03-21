@@ -58,10 +58,6 @@ def init(bus, address):
 #	insert code for ininitalize ADC
 	return 0
 
-# def setCondition(bus, address, command):
-# 	bus.write_i2c_block_data(address, _POINTER_CONFIG,command)
-# 	return 0
-
 def setCondition(bus, address, config):
 	command = [config>>8, config & 0xFF ]
 	bus.write_i2c_block_data(address, _POINTER_CONFIG,command)
@@ -98,10 +94,8 @@ if __name__ == '__main__':
 	| _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
 
 #	print "CONFIG CODE:", format(ADC_config, "04x")
-	command = [ADC_config>>8, ADC_config & 0xFF ]
-	print "CONFIG CODE:", format(command[0], "02x"),format(command[1], "02x")
-
-
+	# command = [ADC_config>>8, ADC_config & 0xFF ]
+	# print "CONFIG CODE:", format(command[0], "02x"),format(command[1], "02x")
 
 #	bus.write_i2c_block_data(address, 0x01, [0xD5, 0x83])
 
@@ -110,6 +104,13 @@ if __name__ == '__main__':
 	while True:
 
 		setCondition(bus, address, ADC_config)
+
+		ready = False
+		while not(ready):
+			state = readCondition(bus, address)
+			ready = (state[0] & 0x80) == 0x00
+			print ready
+			
 		print '>', readCondition(bus, address)
 
 		print readout(bus,address)
