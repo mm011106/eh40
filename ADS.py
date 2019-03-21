@@ -107,10 +107,9 @@ if __name__ == '__main__':
 	while True:
 
 		setCondition(bus, address, ADC_config)
-		waitReady(bus, address)
-
-		print '>', format(readCondition(bus, address), "04x")
 
 		print readout(bus,address)
+
+		print '>', format(readCondition(bus, address), "04x")
 
 		sleep(0.5)
