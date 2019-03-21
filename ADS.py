@@ -93,29 +93,29 @@ def readout_all_SE(bus, address):
 	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] \
 	| _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
 
-	print format(ADC_config, "04x")
+#	print format(ADC_config, "04x")
 	setCondition(bus, address, ADC_config)
 	result.append(readout(bus, address))
 
 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['1G']
-	print format(ADC_config, "04x")
+#	print format(ADC_config, "04x")
 	setCondition(bus, address, ADC_config)
 	result.append(readout(bus, address))
 
 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['2G']
-	print format(ADC_config, "04x")
+#	print format(ADC_config, "04x")
 	setCondition(bus, address, ADC_config)
 	result.append(readout(bus, address))
 
 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['3G']
-	print format(ADC_config, "04x")
+#	print format(ADC_config, "04x")
 	setCondition(bus, address, ADC_config)
 	result.append(readout(bus, address))
 
-	for value in result:
-		print '{0:x}'.format(result)
+	for i, value in enumerate(result):
+		print i,": ", '{0:x}'.format(value)
 
-	return 0
+	return result
 
 def readout_all_DIFF(bus, address):
 	return 0
@@ -136,12 +136,13 @@ if __name__ == '__main__':
 
 	while True:
 
-		setCondition(bus, address, ADC_config)
+#		setCondition(bus, address, ADC_config)
 
-		print readout(bus,address)
+#		print readout(bus,address)
 
-		print '>', format(readCondition(bus, address), "04x")
+#		print '>', format(readCondition(bus, address), "04x")
 
-		readout_all_SE(bus, address):
-
+		print readout_all_SE(bus, address)
+		print
+		
 		sleep(0.5)
