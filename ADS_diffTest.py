@@ -138,7 +138,7 @@ if __name__ == '__main__':
 	_CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['SINGLE'] \
 	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] \
 	| _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
-# at 1V range, input must be 2096mV to get Full Scale Value=32768
+# at 1V range, input must be 2048mV to get Full Scale Value=32768
 	while True:
 
 #		setCondition(bus, address, ADC_config)
