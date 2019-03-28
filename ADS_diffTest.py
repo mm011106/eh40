@@ -115,7 +115,7 @@ def readout_all_SE(bus, address):
 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['01']
 	print format(ADC_config, "04x")
 	setCondition(bus, address, ADC_config)
-	result.append(readout(bus, address))
+	result.append(readout(bus, address)/32768)
 
 	for i, value in enumerate(result):
 		print i,": ", '{0:x}'.format(value)
