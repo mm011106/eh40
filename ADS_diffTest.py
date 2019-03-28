@@ -24,9 +24,9 @@ _CONFIG_RANGE = {
     '6V':    0x0000,
     '4V':    0x0200,
     '2V':    0x0400,
-    '1V':    0x0800,
-    '0.5V':  0x0A00,
-    '0.25V': 0x0C00
+    '1V':    0x0600,
+    '0.5V':  0x0800,
+    '0.25V': 0x0A00
 }
 _MASK_RANGE=0x0E00
 
@@ -90,36 +90,45 @@ def readout_all_SE(bus, address):
 
 	ADC_config = \
 	_CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['SINGLE'] \
-	| _CONFIG_RANGE['1V'] | _CONFIG_RATE['128SPS'] \
+	| _CONFIG_RANGE['4V'] | _CONFIG_RATE['128SPS'] \
 	| _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
 
-	print format(ADC_config, "04x")
+#	print format(ADC_config, "04x")
 	setCondition(bus, address, ADC_config)
 	result.append(readout(bus, address))
 
 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['1G']
-	print format(ADC_config, "04x")
+#	print format(ADC_config, "04x")
 	setCondition(bus, address, ADC_config)
 	result.append(readout(bus, address))
 
 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['2G']
-	print format(ADC_config, "04x")
+#	print format(ADC_config, "04x")
 	setCondition(bus, address, ADC_config)
 	result.append(readout(bus, address))
 
 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['3G']
-	print format(ADC_config, "04x")
+#	print format(ADC_config, "04x")
 	setCondition(bus, address, ADC_config)
 	result.append(readout(bus, address))
 
 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['01']
-	print format(ADC_config, "04x")
+#	print format(ADC_config, "04x")
 	setCondition(bus, address, ADC_config)
-	result.append(readout(bus, address)/32768)
+	result.append(readout(bus, address))
+
+	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['23']
+#	print format(ADC_config, "04x")
+	setCondition(bus, address, ADC_config)
+	result.append(readout(bus, address))
 
 	for i, value in enumerate(result):
 		print i,": ", '{0:x}'.format(value)
 
+	print "0-1: ",result[4]/32768.0
+
+	print "2-3: ",result[5]/32768.0
+ 
 	return result
 
 def readout_all_DIFF(bus, address):
@@ -136,9 +145,9 @@ if __name__ == '__main__':
 
 	ADC_config = \
 	_CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['SINGLE'] \
-	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] \
+	| _CONFIG_RANGE['4V'] | _CONFIG_RATE['128SPS'] \
 	| _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
-# at 1V range, input must be 2048mV to get Full Scale Value=32768
+	
 	while True:
 
 #		setCondition(bus, address, ADC_config)
