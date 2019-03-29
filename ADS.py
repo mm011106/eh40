@@ -24,9 +24,9 @@ _CONFIG_RANGE = {
     '6V':    0x0000,
     '4V':    0x0200,
     '2V':    0x0400,
-    '1V':    0x0800,
-    '0.5V':  0x0A00,
-    '0.25V': 0x0C00
+    '1V':    0x0600,
+    '0.5V':  0x0800,
+    '0.25V': 0x0A00
 }
 _MASK_RANGE=0x0E00
 
@@ -71,7 +71,8 @@ def readCondition(bus, address):
 	return rawData[0] * 256 + rawData[1]
 
 def waitReady(bus, address):
-	while True if readCondition(bus, address) >> 15 == 0 else False :
+	while (True if readCondition(bus, address) >> 15 == 0 else False) :
+		# the MSB of condition register indicating ADC is busy'0' or ready'1'
 		pass
 
 	return 0
@@ -88,11 +89,13 @@ def readout_all_SE(bus, address):
 
 	result = []
 
+#!! read measurement configration from device and make chane as next measurement
 	ADC_config = \
 	_CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['SINGLE'] \
 	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] \
 	| _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
 
+#!! make following iteration into a roop
 #	print format(ADC_config, "04x")
 	setCondition(bus, address, ADC_config)
 	result.append(readout(bus, address))
@@ -112,8 +115,8 @@ def readout_all_SE(bus, address):
 	setCondition(bus, address, ADC_config)
 	result.append(readout(bus, address))
 
-	for i, value in enumerate(result):
-		print i,": ", '{0:x}'.format(value)
+	# for i, value in enumerate(result):
+	# 	print i,": ", '{0:x}'.format(value)
 
 	return result
 
@@ -129,6 +132,7 @@ if __name__ == '__main__':
 
 	init(bus, address)
 
+# !! put default value for ADC_config in diffinition area
 	ADC_config = \
 	_CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['SINGLE'] \
 	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] \
@@ -144,5 +148,5 @@ if __name__ == '__main__':
 
 		print readout_all_SE(bus, address)
 		print
-		
+
 		sleep(0.5)
