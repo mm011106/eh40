@@ -30,6 +30,11 @@ _CONFIG_RANGE = {
 }
 _MASK_RANGE=0x0E00
 
+_CONFIG_CONV_MODE={
+  'CONTINUOUS'  :0x0000,
+  'SINGLE'      :0x0100
+}
+
 _CONFIG_RATE = {
     '8SPS':    0x0000,
     '16SPS':   0x0020,
@@ -42,14 +47,6 @@ _CONFIG_RATE = {
 }
 _MASK_RATE=0x00E0
 
-_CONFIG_CONV_CONTINUOUS = 0x0000
-_CONFIG_CONV_SINGLE = 0x0100
-
-_CONFIG_CONV_MODE={
-  'CONTINUOUS'  :0x0000,
-  'SINGLE'      :0x0100
-}
-
 _CONFIG_COMP_QUE_DISABLE    = 0x0003
 _CONFIG_COMP_RANGE = {
     'NORM':  0x0000,
@@ -57,9 +54,10 @@ _CONFIG_COMP_RANGE = {
 }
 
 _CONFIG_DEFAULT = \
-	_CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['SINGLE'] \
-	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] \
-	| _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
+	  _CONFIG_OS['START']    | _CONFIG_MUX['0G'] \
+	| _CONFIG_RANGE['2V']    | _CONFIG_CONV_MODE['SINGLE'] \
+	| _CONFIG_RATE['128SPS'] | _CONFIG_COMP_RANGE['NORM']  \
+	| _CONFIG_COMP_QUE_DISABLE
 
 
 
@@ -95,31 +93,33 @@ def readout_all_SE(bus, address):
 
 	result = []
 
-#!! read measurement configration from device and make chane as next measurement
-	ADC_config = \
-	_CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['SINGLE'] \
-	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] \
-	| _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
+#	ADC_config = _CONFIG_DEFAULT
+	ADC_config = readCondition(bus, address)
+
+	read_channels=['0G','1G','2G','3G']
 
 #!! make following iteration into a roop
 #	print format(ADC_config, "04x")
-	setCondition(bus, address, ADC_config)
-	result.append(readout(bus, address))
+	for ch in read_channels:
+		ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX[ ch ]
+		print format(ADC_config, "04x")
+		setCondition(bus, address, ADC_config)
+		result.append(readout(bus, address))
 
-	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['1G']
-#	print format(ADC_config, "04x")
-	setCondition(bus, address, ADC_config)
-	result.append(readout(bus, address))
-
-	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['2G']
-#	print format(ADC_config, "04x")
-	setCondition(bus, address, ADC_config)
-	result.append(readout(bus, address))
-
-	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['3G']
-#	print format(ADC_config, "04x")
-	setCondition(bus, address, ADC_config)
-	result.append(readout(bus, address))
+# 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['1G']
+# #	print format(ADC_config, "04x")
+# 	setCondition(bus, address, ADC_config)
+# 	result.append(readout(bus, address))
+#
+# 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['2G']
+# #	print format(ADC_config, "04x")
+# 	setCondition(bus, address, ADC_config)
+# 	result.append(readout(bus, address))
+#
+# 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['3G']
+# #	print format(ADC_config, "04x")
+# 	setCondition(bus, address, ADC_config)
+# 	result.append(readout(bus, address))
 
 	# for i, value in enumerate(result):
 	# 	print i,": ", '{0:x}'.format(value)
@@ -141,13 +141,13 @@ if __name__ == '__main__':
 
 	while True:
 
-		setCondition(bus, address, ADC_config)
+		# setCondition(bus, address, ADC_config)
+		#
+		# print readout(bus,address)
+		# 
+		# print '>', format(readCondition(bus, address), "04x")
 
-		print readout(bus,address)
-
-		print '>', format(readCondition(bus, address), "04x")
-
-#		print readout_all_SE(bus, address)
+		print readout_all_SE(bus, address)
 		print
 
 		sleep(1)
