@@ -56,6 +56,12 @@ _CONFIG_COMP_RANGE = {
     'WIND':  0x0010
 }
 
+_CONFIG_DEFAULT = \
+	_CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['SINGLE'] \
+	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] \
+	| _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
+
+
 
 def init(bus, address):
 #	insert code for ininitalize ADC
@@ -129,24 +135,19 @@ if __name__ == '__main__':
 	address = 0x48
 
 	bus = SMBus(bus_number)
-
 	init(bus, address)
 
-# !! put default value for ADC_config in diffinition area
-	ADC_config = \
-	_CONFIG_OS['START'] | _CONFIG_MUX['0G'] | _CONFIG_CONV_MODE['SINGLE'] \
-	| _CONFIG_RANGE['2V'] | _CONFIG_RATE['128SPS'] \
-	| _CONFIG_COMP_QUE_DISABLE | _CONFIG_COMP_RANGE['NORM']
+	ADC_config = _CONFIG_DEFAULT
 
 	while True:
 
-#		setCondition(bus, address, ADC_config)
+		setCondition(bus, address, ADC_config)
 
-#		print readout(bus,address)
+		print readout(bus,address)
 
-#		print '>', format(readCondition(bus, address), "04x")
+		print '>', format(readCondition(bus, address), "04x")
 
-		print readout_all_SE(bus, address)
+#		print readout_all_SE(bus, address)
 		print
 
-		sleep(0.5)
+		sleep(1)
