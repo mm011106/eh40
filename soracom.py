@@ -56,8 +56,8 @@ if __name__ == '__main__':
     interval = 18
     while True:
 #
-		data =[1.23,2.34,3.45]
-	    payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(data)
+        data =[1.23,2.34,3.45]
+        payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(data)
         payload = "{" + payload + "}"
         logger.debug('%f - %s', time.time(),payload)
 
