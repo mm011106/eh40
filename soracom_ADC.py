@@ -66,8 +66,8 @@ if __name__ == '__main__':
 
     ADC_config = ADS._CONFIG_DEFAULT & ADS._MASK_RATE | ADS._CONFIG_RATE['8SPS']
     ADC_config = ADC_config & ADS._MUSK_RANGE | ADS._CONFIG_RANGE['4V']
-    print ,": ", '{0:x}'.format(ADC_config)
-	
+    print  '> {0:x}'.format(ADC_config)
+
     interval = 18
 
     while True:
