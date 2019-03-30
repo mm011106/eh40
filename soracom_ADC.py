@@ -64,8 +64,8 @@ if __name__ == '__main__':
 
     ADS.init(bus, ADS_address)
 
-    ADC_config = ADS._CONFIG_DEFAULT & ADS._MASK_RATE | ADS._CONFIG_RATE['8SPS']
-    ADC_config = ADC_config & ADS._MUSK_RANGE | ADS._CONFIG_RANGE['4V']
+    ADC_config = ADS._CONFIG_DEFAULT & (~ ADS._MASK_RATE) | ADS._CONFIG_RATE['8SPS']
+    ADC_config = ADC_config & (~ ADS._MASK_RANGE) | ADS._CONFIG_RANGE['4V']
     print  '> {0:x}'.format(ADC_config)
 
     interval = 18
