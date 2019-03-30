@@ -1,8 +1,14 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
 from smbus import SMBus
 from time import sleep
 
 
 # ------  CONST
+
+_DEFAULT_ADDRESS			= 0x48
 
 _POINTER_CONVERSION         = 0x00
 _POINTER_CONFIG             = 0x01
@@ -99,6 +105,8 @@ def readout(bus, address):
 	return adc
 
 def readoutMulti(bus, address, read_channels=None):
+#	readout_channelsのリストで指定されたチャネルを計測して、結果をリストで返す
+#		デフォルト：SEで全チャネルを測定する
 
 	result = []
 
@@ -112,7 +120,7 @@ def readoutMulti(bus, address, read_channels=None):
 
 	for ch in read_channels:
 		ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX[ ch ]
-		print format(ADC_config, "04x")
+		# print format(ADC_config, "04x")
 		setCondition(bus, address, ADC_config)
 		result.append(readout(bus, address))
 
@@ -127,7 +135,8 @@ def readout_all_DIFF(bus, address):
 if __name__ == '__main__':
 
 	bus_number  = 1
-	address = 0x48
+	address = _DEFAULT_ADDRESS
+#	address = 0x48
 
 	bus = SMBus(bus_number)
 	init(bus, address)
