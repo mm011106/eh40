@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # ADS1115 driver library
-#	2019/3/30 Miyamoto
+#	release 1.0   2019/3/30 Miyamoto
 
 from smbus import SMBus
 from time import sleep
