@@ -73,9 +73,10 @@ if __name__ == '__main__':
     while True:
 #
         data = ADS.readoutMulti(bus, ADS_address, ['01','23'])
+        data = [data[0]/32767.*4.096*4., data[1]/32767.*4.096*2.]
 
         # payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(data)
-        payload = '\"level\":{0[0]:d} ,\"pressure\":{0[1]:d} '.format(data)
+        payload = '\"level\":{0[0]:2.5f} ,\"pressure\":{0[1]:2.5f} '.format(data)
         payload = "{" + payload + "}"
         logger.debug('%f - %s', time.time(),payload)
 
