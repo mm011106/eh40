@@ -61,11 +61,12 @@ bus = SMBus(bus_number)
 
 if __name__ == '__main__':
 
-	ADS.init(bus, ADS_address)
+    ADS.init(bus, ADS_address)
 
-	ADC_config = ADS._CONFIG_DEFAULT
+    ADC_config = ADS._CONFIG_DEFAULT
 
     interval = 18
+
     while True:
 #
         data = ADS.readoutMulti(bus, ADS_address. ['01','23'])
