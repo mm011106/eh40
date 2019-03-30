@@ -123,7 +123,7 @@ def readoutMulti(bus, address, read_channels=None):
 		#print format(ADC_config, "04x")
 		setCondition(bus, address, ADC_config)
 		result.append(readout(bus, address))
-		print format(readCondition(bus, address), "04X")
+		# print format(readCondition(bus, address), "04X")
 
 	# for i, value in enumerate(result):
 	# 	print i,": ", '{0:x}'.format(value)
