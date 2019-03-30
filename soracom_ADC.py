@@ -13,6 +13,7 @@
 import socket
 from contextlib import closing
 
+import ADS
 
 import os
 import commands
@@ -52,13 +53,25 @@ hostName='harvest.soracom.io'
 portNumber=8514
 resultSend=''
 
+bus_number  = 1
+bme280_address = 0x76
+ADS_address = 0x48
+
+bus = SMBus(bus_number)
+
 if __name__ == '__main__':
+
+	ADS.init(bus, ADS_address)
+
+	ADC_config = ADS._CONFIG_DEFAULT
 
     interval = 18
     while True:
 #
-        data =[1.23,2.34,3.45]
-        payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(data)
+        data = ADS.readoutMulti(bus, ADS_address. ['01','23'])
+
+        # payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(data)
+        payload = '\"level\":{0[0]:d} ,\"pressure\":{0[1]:d} '.format(data)
         payload = "{" + payload + "}"
         logger.debug('%f - %s', time.time(),payload)
 
