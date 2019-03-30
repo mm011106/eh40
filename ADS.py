@@ -1,6 +1,9 @@
 from smbus import SMBus
 from time import sleep
 
+
+# ------  CONST
+
 _POINTER_CONVERSION         = 0x00
 _POINTER_CONFIG             = 0x01
 
@@ -60,9 +63,13 @@ _CONFIG_DEFAULT = \
 	| _CONFIG_COMP_QUE_DISABLE
 
 
+# ----  Functions
 
 def init(bus, address):
 #	insert code for ininitalize ADC
+	setCondition(bus, address, _CONFIG_DEFAULT)
+	readout(bus, address)
+
 	return 0
 
 def setCondition(bus, address, config):
@@ -73,6 +80,8 @@ def setCondition(bus, address, config):
 def readCondition(bus, address):
 	rawData = bus.read_i2c_block_data(address, _POINTER_CONFIG,2)
 	return rawData[0] * 256 + rawData[1]
+
+	return 0
 
 def waitReady(bus, address):
 	while (True if readCondition(bus, address) >> 15 == 0 else False) :
@@ -89,37 +98,23 @@ def readout(bus, address):
 		adc -= 65535
 	return adc
 
-def readout_all_SE(bus, address):
+def readoutMulti(bus, address, read_channels=None):
 
 	result = []
+
+	if read_channels is None:
+		read_channels=['0G','1G','2G','3G']
 
 #	ADC_config = _CONFIG_DEFAULT
 	ADC_config = readCondition(bus, address)
 
-	read_channels=['0G','1G','2G','3G']
-
-#!! make following iteration into a roop
 #	print format(ADC_config, "04x")
+
 	for ch in read_channels:
 		ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX[ ch ]
 		print format(ADC_config, "04x")
 		setCondition(bus, address, ADC_config)
 		result.append(readout(bus, address))
-
-# 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['1G']
-# #	print format(ADC_config, "04x")
-# 	setCondition(bus, address, ADC_config)
-# 	result.append(readout(bus, address))
-#
-# 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['2G']
-# #	print format(ADC_config, "04x")
-# 	setCondition(bus, address, ADC_config)
-# 	result.append(readout(bus, address))
-#
-# 	ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX['3G']
-# #	print format(ADC_config, "04x")
-# 	setCondition(bus, address, ADC_config)
-# 	result.append(readout(bus, address))
 
 	# for i, value in enumerate(result):
 	# 	print i,": ", '{0:x}'.format(value)
@@ -144,10 +139,10 @@ if __name__ == '__main__':
 		# setCondition(bus, address, ADC_config)
 		#
 		# print readout(bus,address)
-		# 
+		#
 		# print '>', format(readCondition(bus, address), "04x")
 
-		print readout_all_SE(bus, address)
+		print readoutMulti(bus, address)
 		print
 
 		sleep(1)
