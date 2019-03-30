@@ -13,6 +13,7 @@
 import socket
 from contextlib import closing
 
+from smbus import SMBus
 import ADS
 
 import os
@@ -69,7 +70,7 @@ if __name__ == '__main__':
 
     while True:
 #
-        data = ADS.readoutMulti(bus, ADS_address. ['01','23'])
+        data = ADS.readoutMulti(bus, ADS_address, ['01','23'])
 
         # payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(data)
         payload = '\"level\":{0[0]:d} ,\"pressure\":{0[1]:d} '.format(data)
