@@ -120,9 +120,10 @@ def readoutMulti(bus, address, read_channels=None):
 
 	for ch in read_channels:
 		ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX[ ch ]
-		print format(ADC_config, "04x")
+		#print format(ADC_config, "04x")
 		setCondition(bus, address, ADC_config)
 		result.append(readout(bus, address))
+		print format(readCondition(bus, address), "04X")
 
 	# for i, value in enumerate(result):
 	# 	print i,": ", '{0:x}'.format(value)
