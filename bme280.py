@@ -145,7 +145,7 @@ def setup(bus, address):
 		bus.write_byte_data(address, 0xF2, ctrl_hum_reg)
 	except IOError as e:
 		foundDevice = 0
-		print "!! Found no device on the bus: %s".format(address)
+		print "!! Found no device on the bus: ", format(address, "04x")
 	# except Exception as e:
 	# 	print '=== error details ==='
 	# 	print 'type:' + str(type(e))
