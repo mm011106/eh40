@@ -137,19 +137,24 @@ def setup(bus, address):
 	config_reg    = (t_sb << 5) | (filter << 2) | spi3w_en
 	ctrl_hum_reg  = osrs_h
 
+	foundDevice = 1
 	try:
 		bus.write_byte_data(address, 0xF2, ctrl_hum_reg)
-	except Exception as e:
-		print '=== error details ==='
-		print 'type:' + str(type(e))
-		print 'args:' + str(e.args)
-    	print 'message:' + e.message
-    	print 'e:' + str(e)
+	except exceptions.IOError as e:
+		foundDevice = 0
+	# except Exception as e:
+	# 	print '=== error details ==='
+	# 	print 'type:' + str(type(e))
+	# 	print 'args:' + str(e.args)
+    # 	print 'message:' + e.message
+    # 	print 'e:' + str(e)
+	if foundDevice :
+		bus.write_byte_data(address, 0xF4, ctrl_meas_reg)
+		bus.write_byte_data(address, 0xF5, config_reg)
 
-	bus.write_byte_data(address, 0xF4, ctrl_meas_reg)
-	bus.write_byte_data(address, 0xF5, config_reg)
+		get_calib_param(bus, address)
 
-	get_calib_param(bus, address)
+	return foundDevice
 
 # setup()
 # get_calib_param()
