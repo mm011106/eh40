@@ -1,0 +1,17 @@
+#this file shoudl be located /lib/systemd/system/
+# to check this script, run:
+#   sudo systemctrl start soracom.service
+# after you confirmed this script works fine, add the script as start up script.
+#  sudo systemctl enable soracom.service
+#
+
+[Unit]
+Description = Soracom IoT edge device
+
+[Service]
+ExecStart=/usr/bin/python2.7 ~/documents/eh40/soracom_ADC.py
+Restart=always
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
