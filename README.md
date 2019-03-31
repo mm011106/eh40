@@ -19,11 +19,15 @@
 ## ADS1115ドライバ
 - 基本ファンクション
 	- ADS.init(bus, address) : デフォルト設定でイニシャライズ。一度測定する。
-	- ADS.readoutMulti(bus, address, readout_channels[] ) : 複数の（指定）チャネルを測定する。
+	- ADS.readoutMulti(bus, address, readout_channels[] ) : 複数の（指定）チャネルを測定する。計測結果はリストで帰ってくる
 
 #### ADS1115 データシート
 https://cdn-shop.adafruit.com/datasheets/ads1115.pdf
 
+## BME280 ドライバ
+- 基本ファンクション
+	- BME280.setup(bus, address) : イニシャライズ。
+	- BME280.readData(bus, address) : 測定、リストが帰ってくる（温度、気圧、湿度）。
 
 
 ## 自動起動のためのサービス設定ファイル
@@ -34,9 +38,9 @@ https://cdn-shop.adafruit.com/datasheets/ads1115.pdf
 
 ## 動作確認例
 ```
-$ sudo systemctl status soracom.service 
+$ sudo systemctl status soracom.service
 ● soracom.service - Soracom IoT edge device
-   Loaded: loaded (/lib/systemd/system/soracom.service; enabled; vendor preset: 
+   Loaded: loaded (/lib/systemd/system/soracom.service; enabled; vendor preset:
    Active: active (running) since Sun 2019-03-31 02:39:17 BST; 5min ago
  Main PID: 222 (python2.7)
    CGroup: /system.slice/soracom.service
