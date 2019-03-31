@@ -168,8 +168,13 @@ if __name__ == '__main__':
 
 	bus = SMBus(bus_number)
 
-	setup(bus, i2c_address)
+	foundBME280 = setup(bus, i2c_address)
+
 	try:
-		readData(bus, i2c_address)
+		if foundBME280 :
+			readData(bus, i2c_address)
+		else :
+			pass
+			
 	except KeyboardInterrupt:
 		pass
