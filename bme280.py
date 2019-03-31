@@ -125,6 +125,9 @@ def compensate_H(adc_H, cal_H):
 	return var_h
 
 def setup(bus, address):
+#	return 	True:1 when found device and complete initialization
+#			False:0 when no device found on the bus/i2c_address
+
 	osrs_t = 1			#Temperature oversampling x 1
 	osrs_p = 1			#Pressure oversampling x 1
 	osrs_h = 1			#Humidity oversampling x 1
@@ -137,18 +140,20 @@ def setup(bus, address):
 	config_reg    = (t_sb << 5) | (filter << 2) | spi3w_en
 	ctrl_hum_reg  = osrs_h
 
-	foundDevice = 1
+
 	try:
 		bus.write_byte_data(address, 0xF2, ctrl_hum_reg)
 	except IOError as e:
 		foundDevice = 0
+		print "!! Found no device on the bus: %s".format(address)
 	# except Exception as e:
 	# 	print '=== error details ==='
 	# 	print 'type:' + str(type(e))
 	# 	print 'args:' + str(e.args)
     # 	print 'message:' + e.message
     # 	print 'e:' + str(e)
-	if foundDevice :
+	else :
+		foundDevice = 1
 		bus.write_byte_data(address, 0xF4, ctrl_meas_reg)
 		bus.write_byte_data(address, 0xF5, config_reg)
 
