@@ -65,15 +65,17 @@ bus = SMBus(bus_number)
 
 if __name__ == '__main__':
 
-    ADS.init(bus, ADS_address)
-
+    foundADS1115 = ADS.init(bus, ADS_address)
+    if not(foundADS1115) :
+        logger.warning('!! Found No ADS1115 on Address {0:x}'.format(ADS_address))
+		
     # bme280.setup(bus,bme280_address)
 
 # ADC1115 configuration
     ADC_config = ADS._CONFIG_DEFAULT & (~ ADS._MASK_RATE) | ADS._CONFIG_RATE['8SPS']
     ADC_config = ADC_config & (~ ADS._MASK_RANGE) | ADS._CONFIG_RANGE['4V']
 	dummy = ADS.setCondition(bus, ADS_address, ADC_config)
-    print  '> {0:x}'.format(ADC_config)
+    logger.info('> {0:x}'.format(ADC_config))
 
 # mesurement cycle in sec
     interval = 18

@@ -80,10 +80,10 @@ def init(bus, address):
 	try:
 		bus.read_i2c_block_data(address, _POINTER_CONFIG,2)
 	except IOError as e:
-		foundDevice = 0
+		foundDevice = False
 		print "!! Found no device on the bus: ", format(address, "02x")
 	else:
-		foundDevice = 1
+		foundDevice = True
 		setCondition(bus, address, _CONFIG_DEFAULT)
 		readout(bus, address)
 
