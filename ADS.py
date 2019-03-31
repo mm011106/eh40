@@ -74,11 +74,20 @@ _CONFIG_DEFAULT = \
 # ----  Functions
 
 def init(bus, address):
-#	insert code for ininitalize ADC
-	setCondition(bus, address, _CONFIG_DEFAULT)
-	readout(bus, address)
+#	Test the device on the bus and
+#	return 	True:1 when found device
+#			False:0 when no device found on the bus/i2c_address
+	try:
+		bus.read_i2c_block_data(address, _POINTER_CONFIG,2)
+	except IOError as e:
+		foundDevice = 0
+		print "!! Found no device on the bus: ", format(address, "02x")
+	else:
+		foundDevice = 1
+		setCondition(bus, address, _CONFIG_DEFAULT)
+		readout(bus, address)
 
-	return 0
+	return foundDevice
 
 def setCondition(bus, address, config):
 	command = [config>>8, config & 0xFF ]
@@ -142,11 +151,12 @@ if __name__ == '__main__':
 #	address = 0x48
 
 	bus = SMBus(bus_number)
-	init(bus, address)
+	foundADS1115 = init(bus, address)
 
 	ADC_config = _CONFIG_DEFAULT
 
-	while True:
+	if foundADS1115 :
+		while True:
 
 		# setCondition(bus, address, ADC_config)
 		#
@@ -154,7 +164,7 @@ if __name__ == '__main__':
 		#
 		# print '>', format(readCondition(bus, address), "04x")
 
-		print readoutMulti(bus, address)
-		print
+			print readoutMulti(bus, address)
+			print
 
-		sleep(1)
+			sleep(1)
