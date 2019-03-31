@@ -140,7 +140,7 @@ def setup(bus, address):
 	foundDevice = 1
 	try:
 		bus.write_byte_data(address, 0xF2, ctrl_hum_reg)
-	except exceptions.IOError as e:
+	except IOError as e:
 		foundDevice = 0
 	# except Exception as e:
 	# 	print '=== error details ==='
@@ -175,6 +175,6 @@ if __name__ == '__main__':
 			readData(bus, i2c_address)
 		else :
 			pass
-			
+
 	except KeyboardInterrupt:
 		pass
