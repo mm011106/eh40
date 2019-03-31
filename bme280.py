@@ -148,8 +148,15 @@ def setup(bus, address):
 
 
 if __name__ == '__main__':
+	from smbus import SMBus
+
+	bus_number  = 1
+	i2c_address = 0x76
+
+	bus = SMBus(bus_number)
+
+	setup(bus, i2c_address)
 	try:
-		readData()
+		readData(bus, i2c_address)
 	except KeyboardInterrupt:
 		pass
-
