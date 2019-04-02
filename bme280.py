@@ -178,7 +178,7 @@ if __name__ == '__main__':
 
 	try:
 		if foundBME280 :
-			readData(bus, i2c_address)
+			print readData(bus, i2c_address)
 		else :
 			pass
 
