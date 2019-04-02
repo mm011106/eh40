@@ -153,6 +153,7 @@ def setup(bus, address):
     # 	print 'message:' + e.message
     # 	print 'e:' + str(e)
 	else :
+		print "GOOD! Found a device on the bus: 0x"+ format(address, "2x")
 		foundDevice = True
 		bus.write_byte_data(address, 0xF4, ctrl_meas_reg)
 		bus.write_byte_data(address, 0xF5, config_reg)
