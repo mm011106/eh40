@@ -180,6 +180,7 @@ if __name__ == '__main__':
 		if foundBME280 :
 			print readData(bus, i2c_address)
 		else :
+			print 'ERROR: found no device on the bus'
 			pass
 
 	except KeyboardInterrupt:
