@@ -38,7 +38,7 @@ https://cdn-shop.adafruit.com/datasheets/ads1115.pdf
 - `sudo systemctl status サービス名.service` で確認
 - `sudo systemctl stop|start サービス名.service`で、手動で 停止｜起動
 - `sudo systemctl restart サービス名.service`で、変更したスクリプトを有効に
-- `sudo systemcgl daemon-restart`で、.serviiceを変更した場合のアップデート
+- `sudo systemctl daemon-restart`で、.serviceを変更した場合のアップデート
 
 ## 動作確認例
 ```
