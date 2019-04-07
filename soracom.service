@@ -9,7 +9,7 @@
 Description = Soracom IoT edge device
 
 [Service]
-ExecStart=/usr/bin/python2.7 ~/documents/eh40/soracom_ADC.py
+ExecStart=/usr/bin/python2.7 ~/documents/eh40/soracom_EH40.py
 Restart=always
 Type=simple
 
