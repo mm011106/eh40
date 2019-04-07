@@ -144,8 +144,8 @@ def setup(bus, address):
 	try:
 		bus.write_byte_data(address, 0xF2, ctrl_hum_reg)
 	except IOError as e:
-		foundDevice = 0
-		print "!! Found no device on the bus: 0x"+ format(address, "2x")
+		foundDevice = False
+		# print "!! Found no device on the bus: 0x"+ format(address, "2x")
 	# except Exception as e:
 	# 	print '=== error details ==='
 	# 	print 'type:' + str(type(e))
@@ -153,7 +153,8 @@ def setup(bus, address):
     # 	print 'message:' + e.message
     # 	print 'e:' + str(e)
 	else :
-		foundDevice = 1
+		# print "GOOD! Found a device on the bus: 0x"+ format(address, "2x")
+		foundDevice = True
 		bus.write_byte_data(address, 0xF4, ctrl_meas_reg)
 		bus.write_byte_data(address, 0xF5, config_reg)
 
@@ -177,8 +178,9 @@ if __name__ == '__main__':
 
 	try:
 		if foundBME280 :
-			readData(bus, i2c_address)
+			print readData(bus, i2c_address)
 		else :
+			print 'ERROR: found no device on the bus'
 			pass
 
 	except KeyboardInterrupt:
