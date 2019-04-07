@@ -65,6 +65,9 @@ bus = SMBus(bus_number)
 
 if __name__ == '__main__':
 
+    logger.warning('Start script: %s', __file__)
+
+
     foundADS1115 = ADS.init(bus, ADS_address)
     if not(foundADS1115) :
         logger.warning('!! Found No ADS1115 on Address {0:x}'.format(ADS_address))
