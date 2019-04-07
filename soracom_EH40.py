@@ -80,10 +80,9 @@ if __name__ == '__main__':
     logger.info('> {0:x}'.format(ADC_config))
 
 # mesurement cycle in sec
-    interval = 18
+    interval = 18.5 
 
     while True:
-#
 
         ADSdata=[32767,32767]
 
@@ -95,7 +94,7 @@ if __name__ == '__main__':
             logger.warning('Something happed on I2C bus')
 
         ADSdata = [ADSdata[0]/32767.*4.096*4., ADSdata[1]/32767.*4.096*2.]
-        print ADSdata
+        # print ADSdata
 
         data = [0,0,0]
 
