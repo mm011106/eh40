@@ -54,3 +54,11 @@ Mar 31 02:39:17 raspberrypi systemd[1]: Started Soracom IoT edge device.
 ```
 
 [systemctl](https://qiita.com/sinsengumi/items/24d726ec6c761fc75cc9)コマンドについて
+
+## Turn Off the swap file
+
+`sudo systemctl stop dphys-swapfile.service` 
+`sudo systemctl disable dphys-swapfile.service`
+
+followed by confirming the commands.
+`systemctl status dphys-swapfile.service`
