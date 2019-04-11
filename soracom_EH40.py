@@ -89,25 +89,26 @@ if __name__ == '__main__':
     while True:
 
         ADSdata=[32767,32767]
-
-        try:
-            ADSdata = ADS.readoutMulti(bus, ADS_address, ['01','23'])
-        except IOError as msg:
-            logger.warning('ADS did not respond: %s',msg)
-        except :
-            logger.warning('Something happed on I2C bus')
+        if foundADS1115 :
+            try:
+                ADSdata = ADS.readoutMulti(bus, ADS_address, ['01','23'])
+            except IOError as msg:
+                logger.warning('ADS did not respond: %s',msg)
+            except :
+                logger.warning('Something happed on I2C bus')
 
         ADSdata = [ADSdata[0]/32767.*4.096*4., ADSdata[1]/32767.*4.096*2.]
         # print ADSdata
 
         data = [0,0,0]
 
-        try:
-            data = bme280.readData(bus, bme280_address)
-        except  IOError as msg:
-            logger.warning('BME280 did not respond: %s',msg)
-        except :
-            logger.warning('Somthing happend on I2C bus')
+        if foundBME280 :
+            try:
+                data = bme280.readData(bus, bme280_address)
+            except  IOError as msg:
+                logger.warning('BME280 did not respond: %s',msg)
+            except :
+                logger.warning('Somthing happend on I2C bus')
  
         payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(data)
         payload = payload + ', \"level\":{0[0]:2.5f} ,\"pressure\":{0[1]:2.5f} '.format(ADSdata)
