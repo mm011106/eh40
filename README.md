@@ -34,17 +34,17 @@ https://cdn-shop.adafruit.com/datasheets/ads1115.pdf
 
 
 ## 自動起動のためのサービス設定ファイル
-- `/lib/systemd/system/サービス名.service`
+- `/etc/systemd/system/サービス名.service`
 - `sudo systemctl status サービス名.service` で確認
 - `sudo systemctl stop|start サービス名.service`で、手動で 停止｜起動
 - `sudo systemctl restart サービス名.service`で、変更したスクリプトを有効に
-- `sudo systemctl daemon-restart`で、.serviceを変更した場合のアップデート
+- `sudo systemctl daemon-reload`で、.serviceを変更した場合のアップデート
 
 ## 動作確認例
 ```
 $ sudo systemctl status soracom.service
 ● soracom.service - Soracom IoT edge device
-   Loaded: loaded (/lib/systemd/system/soracom.service; enabled; vendor preset:
+   Loaded: loaded (/etc/systemd/system/soracom.service; enabled; vendor preset:
    Active: active (running) since Sun 2019-03-31 02:39:17 BST; 5min ago
  Main PID: 222 (python2.7)
    CGroup: /system.slice/soracom.service
@@ -61,7 +61,7 @@ Mar 31 02:39:17 raspberrypi systemd[1]: Started Soracom IoT edge device.
 
 `sudo systemctl disable dphys-swapfile.service`
 
-followed by confirming the commands.
+このコマンドで設定の確認
 
 `systemctl status dphys-swapfile.service`
 
