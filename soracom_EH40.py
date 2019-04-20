@@ -84,7 +84,7 @@ if __name__ == '__main__':
         logger.info('> {0:x}'.format(ADC_config))
 
 # mesurement cycle in sec
-    interval = 18.5 
+    interval = 18.5
 
     while True:
 
@@ -96,9 +96,16 @@ if __name__ == '__main__':
                 logger.warning('ADS did not respond: %s',msg)
             except :
                 logger.warning('Something happed on I2C bus')
-
+        # readout in [V]
         ADSdata = [ADSdata[0]/32767.*4.096*4., ADSdata[1]/32767.*4.096*2.]
         # print ADSdata
+
+        # convert to actual unit of the each sensor
+        # condition:
+        #   analog output of the Panel Meter was set to 2.5V=100%
+        # unit = [ % , kPa]
+        correctedADSdata =[ADSdata[0] * 4 *10, (ADSdata[1]-1)/4*100]
+
 
         data = [0,0,0]
 
@@ -109,9 +116,10 @@ if __name__ == '__main__':
                 logger.warning('BME280 did not respond: %s',msg)
             except :
                 logger.warning('Somthing happend on I2C bus')
- 
+
         payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(data)
-        payload = payload + ', \"level\":{0[0]:2.5f} ,\"pressure\":{0[1]:2.5f} '.format(ADSdata)
+        #payload = payload + ', \"level\":{0[0]:2.5f} ,\"pressure\":{0[1]:2.5f} '.format(ADSdata)
+        payload = payload + ', \"level\":{0[0]:4.2f} ,\"pressure\":{0[1]:4.2f} '.format(correctedADSdata)
         payload = "{" + payload + "}"
         logger.debug('%f - %s', time.time(),payload)
 
