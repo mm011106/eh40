@@ -22,6 +22,8 @@ import commands
 import time
 import logging
 
+import json
+
 # logger setup
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.WARNING)
@@ -88,6 +90,8 @@ if __name__ == '__main__':
 
     while True:
 
+        measurements={}
+
         ADSdata=[32767,32767]
         if foundADS1115 :
             try:
@@ -106,6 +110,8 @@ if __name__ == '__main__':
         # unit = [ % , kPa]
         correctedReadOut =[readOutInVolt [0] * 4 * 10, (readOutInVolt [1]-1) / 4 * 100]
 
+        measurements["level"]    = correctedReadOut[0]
+        measurements["pressure"] = correctedReadOut[1]
 
         environmentalData = [0,0,0]
 
@@ -117,11 +123,18 @@ if __name__ == '__main__':
             except :
                 logger.warning('Somthing happend on I2C bus')
 
+        measurements["temp"]        = environmentalData[0]
+        measurements["humid"]       = environmentalData[1]
+        measurements["atmPressure"] = environmentalData[2]
+
         payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(environmentalData)
         #payload = payload + ', \"level\":{0[0]:2.5f} ,\"pressure\":{0[1]:2.5f} '.format(ADSdata)
         payload += ', \"level\":{0[0]:4.2f} ,\"pressure\":{0[1]:4.2f} '.format(correctedReadOut)
 
         payload = "{" + payload + "}"
+
+        payload = json.dumps(measurements)
+
         logger.debug('%f - %s', time.time(),payload)
 
         try:
