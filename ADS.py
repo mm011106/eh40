@@ -65,10 +65,10 @@ _CONFIG_COMP_RANGE = {
 }
 
 _CONFIG_DEFAULT = \
-	  _CONFIG_OS['START']    | _CONFIG_MUX['0G'] \
-	| _CONFIG_RANGE['2V']    | _CONFIG_CONV_MODE['SINGLE'] \
-	| _CONFIG_RATE['128SPS'] | _CONFIG_COMP_RANGE['NORM']  \
-	| _CONFIG_COMP_QUE_DISABLE
+      _CONFIG_OS['START']    | _CONFIG_MUX['0G'] \
+    | _CONFIG_RANGE['2V']    | _CONFIG_CONV_MODE['SINGLE'] \
+    | _CONFIG_RATE['128SPS'] | _CONFIG_COMP_RANGE['NORM']  \
+    | _CONFIG_COMP_QUE_DISABLE
 
 
 # ----  Functions
@@ -77,94 +77,91 @@ def init(bus, address):
 #	Test the device on the bus and
 #	return 	True:1 when found device
 #			False:0 when no device found on the bus/i2c_address
-	try:
-		bus.read_i2c_block_data(address, _POINTER_CONFIG,2)
-	except IOError as e:
-		foundDevice = False
-		print "!! Found no device on the bus: ", format(address, "02x")
-	else:
-		foundDevice = True
-		setCondition(bus, address, _CONFIG_DEFAULT)
-		readout(bus, address)
+    try:
+        bus.read_i2c_block_data(address, _POINTER_CONFIG,2)
+    except IOError as e:
+        foundDevice = False
+        print "!! Found no device on the bus: ", format(address, "02x")
+    else:
+        foundDevice = True
+        setCondition(bus, address, _CONFIG_DEFAULT)
+        readout(bus, address)
 
-	return foundDevice
+    return foundDevice
 
 def setCondition(bus, address, config):
-	command = [config>>8, config & 0xFF ]
-	bus.write_i2c_block_data(address, _POINTER_CONFIG,command)
-	return 0
+    command = [config>>8, config & 0xFF ]
+    bus.write_i2c_block_data(address, _POINTER_CONFIG,command)
+    return 0
 
 def readCondition(bus, address):
-	rawData = bus.read_i2c_block_data(address, _POINTER_CONFIG,2)
-	return rawData[0] * 256 + rawData[1]
-
-	return 0
+    rawData = bus.read_i2c_block_data(address, _POINTER_CONFIG,2)
+    return rawData[0] * 256 + rawData[1]
 
 def waitReady(bus, address):
-	while (True if readCondition(bus, address) >> 15 == 0 else False) :
-		# the MSB of condition register indicating ADC is busy'0' or ready'1'
-		pass
-
+    while (True if readCondition(bus, address) >> 15 == 0 else False) :
+        # the MSB of condition register indicating ADC is busy'0' or ready'1'
+        pass
 	return 0
 
 def readout(bus, address):
-	waitReady(bus, address)
-	raw = bus.read_i2c_block_data(address,_POINTER_CONVERSION,2)
-	adc = raw[0] * 256 + raw[1]
-	if adc > 32767:
-		adc -= 65535
-	return adc
+    waitReady(bus, address)
+    raw = bus.read_i2c_block_data(address,_POINTER_CONVERSION,2)
+    adc = raw[0] * 256 + raw[1]
+    if adc > 32767:
+        adc -= 65535
+    return adc
 
 def readoutMulti(bus, address, read_channels=None):
 #	readout_channelsのリストで指定されたチャネルを計測して、結果をリストで返す
 #		デフォルト：SEで全チャネルを測定する
 
-	result = []
+    result = []
 
-	if read_channels is None:
-		read_channels=['0G','1G','2G','3G']
+    if read_channels is None:
+        read_channels=['0G','1G','2G','3G']
 
 #	ADC_config = _CONFIG_DEFAULT
-	ADC_config = readCondition(bus, address)
+    ADC_config = readCondition(bus, address)
 
 #	print format(ADC_config, "04x")
 
-	for ch in read_channels:
-		ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX[ ch ]
-		#print format(ADC_config, "04x")
-		setCondition(bus, address, ADC_config)
-		result.append(readout(bus, address))
-		# print format(readCondition(bus, address), "04X")
+    for ch in read_channels:
+        ADC_config = ADC_config & (~ _MASK_MUX) | _CONFIG_MUX[ ch ]
+        #print format(ADC_config, "04x")
+        setCondition(bus, address, ADC_config)
+        result.append(readout(bus, address))
+        # print format(readCondition(bus, address), "04X")
 
 	# for i, value in enumerate(result):
 	# 	print i,": ", '{0:x}'.format(value)
 
-	return result
+    return result
 
 def readout_all_DIFF(bus, address):
-	return 0
+    return 0
 
 if __name__ == '__main__':
 
-	bus_number  = 1
-	address = _DEFAULT_ADDRESS
+    bus_number  = 1
+    address = _DEFAULT_ADDRESS
 #	address = 0x48
 
-	bus = SMBus(bus_number)
-	foundADS1115 = init(bus, address)
+    bus = SMBus(bus_number)
+    foundADS1115 = init(bus, address)
 
-	ADC_config = _CONFIG_DEFAULT
+    ADC_config = _CONFIG_DEFAULT
 
-	if foundADS1115 :
-		while True:
+    if foundADS1115 :
+        while True:
 
-		# setCondition(bus, address, ADC_config)
-		#
-		# print readout(bus,address)
-		#
-		# print '>', format(readCondition(bus, address), "04x")
+        # setCondition(bus, address, ADC_config)
+        #
+        # print readout(bus,address)
+        #
+        # print '>', format(readCondition(bus, address), "04x")
 
-			print readoutMulti(bus, address)
-			print
+            print readoutMulti(bus, address)
+            print
 
-			sleep(1)
+            sleep(1)
