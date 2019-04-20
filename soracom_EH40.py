@@ -127,11 +127,11 @@ if __name__ == '__main__':
         measurements["humid"]       = environmentalData[1]
         measurements["atmPressure"] = environmentalData[2]
 
-        payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(environmentalData)
+        #payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(environmentalData)
         #payload = payload + ', \"level\":{0[0]:2.5f} ,\"pressure\":{0[1]:2.5f} '.format(ADSdata)
-        payload += ', \"level\":{0[0]:4.2f} ,\"pressure\":{0[1]:4.2f} '.format(correctedReadOut)
+        #payload += ', \"level\":{0[0]:4.2f} ,\"pressure\":{0[1]:4.2f} '.format(correctedReadOut)
 
-        payload = "{" + payload + "}"
+        #payload = "{" + payload + "}"
 
         payload = json.dumps(measurements)
 
