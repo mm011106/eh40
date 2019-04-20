@@ -97,30 +97,30 @@ if __name__ == '__main__':
             except :
                 logger.warning('Something happed on I2C bus')
         # readout in [V]
-        ADSdata = [ADSdata[0]/32767.*4.096*4., ADSdata[1]/32767.*4.096*2.]
+        readOutInVolt = [ADSdata[0]/32767.*4.096*4., ADSdata[1]/32767.*4.096*2.]
         # print ADSdata
 
         # convert to actual unit of the each sensor
         # condition:
         #   analog output of the Panel Meter was set to 2.5V=100%
         # unit = [ % , kPa]
-        correctedADSdata =[ADSdata[0] * 4 *10, (ADSdata[1]-1)/4*100]
+        correctedReadOut =[readOutInVolt [0] * 4 * 10, (readOutInVolt [1]-1) / 4 * 100]
 
 
-        data = [0,0,0]
+        environmentalData = [0,0,0]
 
         if foundBME280 :
             try:
-                data = bme280.readData(bus, bme280_address)
+                environmentalData = bme280.readData(bus, bme280_address)
             except  IOError as msg:
                 logger.warning('BME280 did not respond: %s',msg)
             except :
                 logger.warning('Somthing happend on I2C bus')
 
-        payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(data)
+        payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(environmentalData)
         #payload = payload + ', \"level\":{0[0]:2.5f} ,\"pressure\":{0[1]:2.5f} '.format(ADSdata)
-        payload += ', \"level\":{0[0]:4.2f} ,\"pressure\":{0[1]:4.2f} '.format(correctedADSdata)
-        
+        payload += ', \"level\":{0[0]:4.2f} ,\"pressure\":{0[1]:4.2f} '.format(correctedReadOut)
+
         payload = "{" + payload + "}"
         logger.debug('%f - %s', time.time(),payload)
 
