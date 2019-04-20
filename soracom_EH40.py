@@ -119,7 +119,8 @@ if __name__ == '__main__':
 
         payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(data)
         #payload = payload + ', \"level\":{0[0]:2.5f} ,\"pressure\":{0[1]:2.5f} '.format(ADSdata)
-        payload = payload + ', \"level\":{0[0]:4.2f} ,\"pressure\":{0[1]:4.2f} '.format(correctedADSdata)
+        payload += ', \"level\":{0[0]:4.2f} ,\"pressure\":{0[1]:4.2f} '.format(correctedADSdata)
+        
         payload = "{" + payload + "}"
         logger.debug('%f - %s', time.time(),payload)
 
