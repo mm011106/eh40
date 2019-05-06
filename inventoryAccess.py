@@ -15,17 +15,21 @@ import requests
 
 idFile='./id.json'
 
-f=open(idFile, 'r')
-id=json.load(f)
-f.close()
+try:
+    f=open(idFile, 'r')
+except IOError:
+    print 'No id.json file found!'
+else:
+    id=json.load(f)
+    f.close()
 
-headers = {
-    'x-device-secret': id['secretKey'] ,
-    'Content-Type': 'application/json'
-}
+    headers = {
+        'x-device-secret': id['secretKey'] ,
+        'Content-Type': 'application/json'
+    }
 
-url = 'https://api.soracom.io/v1/devices/' + id['deviceId'] + '/publish'
+    url = 'https://api.soracom.io/v1/devices/' + id['deviceId'] + '/publish'
+ 
+    data = {'temp':36}
 
-data = {'temp':36}
-
-response = requests.post(url , headers=headers, data=json.dumps(data))
+    response = requests.post(url , headers=headers, data=json.dumps(data))
