@@ -23,13 +23,18 @@ else:
     id=json.load(f)
     f.close()
 
+data = {'temp':33}    
+    
+if ('secretKey' in id) and ('deviceId' in id):
     headers = {
         'x-device-secret': id['secretKey'] ,
         'Content-Type': 'application/json'
     }
 
     url = 'https://api.soracom.io/v1/devices/' + id['deviceId'] + '/publish'
- 
-    data = {'temp':36}
+    
+    response = requests.post(url, headers=headers, data=json.dumps(data))
+#    print response.status_code
 
-    response = requests.post(url , headers=headers, data=json.dumps(data))
+    if response.status_code!=201:
+        print 'secret key or device ID was incorrect.'
