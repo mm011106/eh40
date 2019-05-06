@@ -6,6 +6,13 @@ import json
 import requests
 
 # id & secure key for access
+#   format of id.json:
+#{
+#	"keyId":"xxxxxx" ,
+#	"deviceId":"yyyyyyy" , 
+#	"secretKey":"zzzzzzzzzzz"
+#}
+
 idFile='./id.json'
 
 f=open(idFile, 'r')
