@@ -102,7 +102,7 @@ def waitReady(bus, address):
     while (True if readCondition(bus, address) >> 15 == 0 else False) :
         # the MSB of condition register indicating ADC is busy'0' or ready'1'
         pass
-	return 0
+    return 0
 
 def readout(bus, address):
     waitReady(bus, address)
