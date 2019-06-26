@@ -124,8 +124,8 @@ if __name__ == '__main__':
                 logger.warning('Somthing happend on I2C bus')
 
         measurements["temp"]        = environmentalData[0]
-        measurements["humid"]       = environmentalData[1]
-        measurements["atmPressure"] = environmentalData[2]
+        measurements["humid"]       = environmentalData[2]
+        measurements["atmPressure"] = environmentalData[1]
 
         #payload = '\"temp\":{0[0]:.3f} ,\"humid\":{0[2]:.3f} ,\"atmPressure\":{0[1]:.2f}'.format(environmentalData)
         #payload = payload + ', \"level\":{0[0]:2.5f} ,\"pressure\":{0[1]:2.5f} '.format(ADSdata)
