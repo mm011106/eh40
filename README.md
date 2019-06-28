@@ -15,7 +15,7 @@
 - 参考URL　https://github.com/adafruit/Adafruit_CircuitPython_ADS1x15/blob/master/adafruit_ads1x15/ads1x15.py
 
 ## update!
-- shutdwon sw のハンドリングスクリプトを吸収しました。　2019/06/28
+- shutdown sw のハンドリングスクリプトを吸収しました。　2019/06/28
 - ADS1115のドライブ用ライブラリが完成　2019/3/30
 - ADS,BMEの両方を同時に読み取るように変更し、リリース版を作成  2019/4/7
   - EH-40のアンプ増幅率などを加味して、電圧をリードアウトするようにした
