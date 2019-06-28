@@ -13,7 +13,7 @@
 Description=Shutdown Switch watcher
 
 [Service]
-ExecStart =/usr/bin/python2.7 /home/pi/documents/resetSW/shutdwnSwitch.py
+ExecStart =/usr/bin/python2.7 /home/pi/eh40/shutdwnSwitch.py
 Restart=always
 Type=simple
 
