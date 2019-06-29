@@ -59,7 +59,7 @@ Mar 31 02:39:17 raspberrypi systemd[1]: Started Soracom IoT edge device.
 
 ## Turn Off the swap file
 
-`sudo systemctl stop dphys-swapfile.service` 
+`sudo systemctl stop dphys-swapfile.service`
 
 `sudo systemctl disable dphys-swapfile.service`
 
@@ -88,11 +88,12 @@ Mar 31 02:39:17 raspberrypi systemd[1]: Started Soracom IoT edge device.
 - `sudo systemctl status shutdwnSw.service` で確認
 - `sudo systemctl stop|start shutdwnSw.service`で、手動で 停止｜起動
 - `sudo systemctl enable shutdwnSw.service`で、永続化
+- `sudo systemctl daemon-reload`で、.serviceを変更した場合のアップデート
 
 
 ## 動作確認例
 ```
-$ sudo systemctl status shutdwnSw.service 
+$ sudo systemctl status shutdwnSw.service
 ● shutdwnSw.service - Shutdown Switch watcher
    Loaded: loaded (/lib/systemd/system/shutdwnSw.service; enabled; vendor preset
    Active: active (running) since Sun 2019-03-31 02:39:17 BST; 5min ago
