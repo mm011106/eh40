@@ -68,6 +68,36 @@ Mar 31 02:39:17 raspberrypi systemd[1]: Started Soracom IoT edge device.
 `systemctl status dphys-swapfile.service`
 
 
+# 設定ファイル
+##　ppp設定
+
+```
+$ sudo ls -al /etc/ppp/peers/soracom_MS2372
+-rw-r----- 1 root dip 299 Apr 13 09:13 /etc/ppp/peers/soracom_MS2372
+```
+
+## udev用ルールファイル
+
+```
+$ sudo ls -al /etc/udev/rules.d/40-MS2372.rules
+-rw-r--r-- 1 root root 179 Apr 13 08:55 /etc/udev/rules.d/40-MS2372.rules
+```
+
+## ネットワークインターフェイス設定
+
+```
+$ sudo ls -al /etc/network/interfaces
+-rw-r--r-- 1 root root 342 Apr 13 07:56 /etc/network/interfaces
+```
+に追加する。
+
+## ppp接続用チャットスクリプト
+
+```
+$ sudo ls -al /etc/chatscripts/soracom_MS2372
+-rw-r----- 1 root dip 494 Apr 13 02:16 /etc/chatscripts/soracom_MS2372
+```
+
 
 # Shutdown switch for RaspberryPi
 ## 機能
