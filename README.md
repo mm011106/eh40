@@ -100,6 +100,7 @@ $ sudo ls -al /etc/chatscripts/soracom_MS2372
 
 
 # Shutdown switch for RaspberryPi
+
 ## 機能
 - RaspberryPiにシャットダウンスイッチの機能をつけます。
 - スイッチを3秒程度押し続けると、シャットダウンコマンドが発行され、電源が切れます。
