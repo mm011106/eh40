@@ -41,7 +41,18 @@ else
   echo " -- udev rule already exists. nothing changed."
 fi
 
-sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./soracom.service
+TARGET_DIR='/lib/systemd/system'
+TARGET_DIR='.'
+sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./soracom.service > $TARGET_DIR/test.txt 
+systemctl start soracom.service
+systemctl enable soracom.service
 
-#mv /etc/network/interfaces /etc/network/interfaces.BUP_$TIME_STAMP
-#cp ./ppp/network/interfaces /etc/network
+sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./shutdwnSwitch.service
+systemctl start shutdwnSwitch.service
+systemctl enable shutdwnSwitch.service
+
+echo "mv /etc/network/interfaces /etc/network/interfaces.BUP_$TIME_STAMP"
+echo "cp ./ppp/network/interfaces /etc/network"
+
+echo "sudo systemctl stop dphys-swapfile.service"
+echo "sudo systemctl disable dphys-swapfile.service"
