@@ -43,13 +43,17 @@ fi
 
 TARGET_DIR='/lib/systemd/system'
 TARGET_DIR='.'
-sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./soracom.service > $TARGET_DIR/test.txt 
-systemctl start soracom.service
-systemctl enable soracom.service
+sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./soracom.service > $TARGET_DIR/soracom.txt
+if [ -e $TARGET_DIR/soracom.service ]; then
+	systemctl start soracom.service
+  systemctl enable soracom.service
+fi
 
-sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./shutdwnSwitch.service
-systemctl start shutdwnSwitch.service
-systemctl enable shutdwnSwitch.service
+sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./shutdwnSwitch.service > $TARGET_DIR/shutdwnSwitch.txt
+if [ -e $TARGET_DIR/soracom.service ]; then
+	systemctl start shutdwnSwitch.service
+	systemctl enable shutdwnSwitch.service
+fi
 
 echo "mv /etc/network/interfaces /etc/network/interfaces.BUP_$TIME_STAMP"
 echo "cp ./ppp/network/interfaces /etc/network"
