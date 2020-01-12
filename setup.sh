@@ -54,6 +54,8 @@ fi
 if [ ! `systemctl is-enabled soracom` = 'enabled' ]; then
   systemctl start soracom.service && systemctl enable soracom.service
   echo "... Started"
+else
+	echo "... The service is already enabled"
 fi
 
 echo "Start Shutdown Sw service..."
@@ -64,6 +66,8 @@ fi
 if [ ! `systemctl is-enabled shutdwnSwitch` = 'enabled' ]; then
   systemctl start shutdwnSwitch.service && systemctl enable shutdwnSwitch.service
   echo "... Started"
+else
+  echo "... The service is already enabled"
 fi
 
 echo "Configure network interface..."
