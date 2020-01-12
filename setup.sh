@@ -48,6 +48,7 @@ echo "Start detalogger service..."
 if [ -e $TARGET_DIR/soracom.service ]; then
 	systemctl start soracom.service
   systemctl enable soracom.service
+	echo "... Started"
 fi
 
 echo "Start Shutdown Sw service..."
@@ -55,6 +56,7 @@ echo "Start Shutdown Sw service..."
 if [ -e $TARGET_DIR/shutdwnSwitch.service ]; then
 	systemctl start shutdwnSwitch.service
 	systemctl enable shutdwnSwitch.service
+	echo "... Started"
 fi
 
 echo "Configure network interface..."
