@@ -5,7 +5,7 @@ TIME_STAMP=`date +%Y%m%d%H%M%S`
 #echo $TIME_STAMP
 #echo $SCRIPT_DIR
 
-echo "Start setting up files for connecting the net via Soracom Serivce."
+echo "Start setting up files for connecting the net via Soracom Serivce..."
 
 echo $(id -u -n)
 
@@ -43,20 +43,25 @@ fi
 
 TARGET_DIR='/lib/systemd/system'
 TARGET_DIR='.'
+
+echo "Start detalogger service..."
 sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./soracom.service > $TARGET_DIR/soracom.txt
 if [ -e $TARGET_DIR/soracom.service ]; then
 	systemctl start soracom.service
   systemctl enable soracom.service
 fi
 
+echo "Start Shutdown Sw service..."
 sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./shutdwnSwitch.service > $TARGET_DIR/shutdwnSwitch.txt
-if [ -e $TARGET_DIR/soracom.service ]; then
+if [ -e $TARGET_DIR/shutdwnSwitch.service ]; then
 	systemctl start shutdwnSwitch.service
 	systemctl enable shutdwnSwitch.service
 fi
 
+echo "Configure network interface..."
 echo "mv /etc/network/interfaces /etc/network/interfaces.BUP_$TIME_STAMP"
 echo "cp ./ppp/network/interfaces /etc/network"
 
-echo "sudo systemctl stop dphys-swapfile.service"
-echo "sudo systemctl disable dphys-swapfile.service"
+echo "Stopping swap..."
+echo "systemctl stop dphys-swapfile.service"
+echo "systemctl disable dphys-swapfile.service"
