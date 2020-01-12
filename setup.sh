@@ -7,10 +7,10 @@ TIME_STAMP=`date +%Y%m%d%H%M%S`
 
 echo "Start setting up files for connecting the net via Soracom Serivce..."
 
-if [! `id -u -n~` = 'root']; then
+if [! `id -u -n` = 'root']; then
 	echo "Please run as root....  "
 	exit 1
-fi 
+fi
 
 TARGET_DIR='/etc/ppp/peers'
 if [ ! -e $TARGET_DIR/soracom_MS2372 ]; then
