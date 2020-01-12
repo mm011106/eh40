@@ -57,7 +57,7 @@ echo "... Started"
 echo "Start Shutdown Sw service..."
 if [ ! -e $TARGET_DIR/shutdwnSwitch.service ]; then
   echo "  found no Service file.  Generating file..."
-	#sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./shutdwnSwitch.service > $TARGET_DIR/shutdwnSwitch.service
+	sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./shutdwnSwitch.service > $TARGET_DIR/shutdwnSwitch.service
 fi
 systemctl start shutdwnSwitch.service && systemctl enable shutdwnSwitch.service
 echo "... Started"
