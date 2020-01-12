@@ -5,7 +5,7 @@ TIME_STAMP=`date +%Y%m%d%H%M%S`
 #echo $TIME_STAMP
 #echo $SCRIPT_DIR
 
-echo $1
+echo "Start setting up files for connecting the net via Soracom Serivce."
 
 echo $(id -u -n)
 
