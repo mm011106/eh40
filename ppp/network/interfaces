@@ -9,4 +9,3 @@ source-directory /etc/network/interfaces.d
 allow-hotplug wwan0
 iface wwan0 inet ppp
     provider soracom_MS2372
-#    provider soracom_ak-020
