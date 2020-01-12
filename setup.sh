@@ -12,17 +12,17 @@ echo $(id -u -n)
 TARGET_DIR='/etc/ppp/peers'
 if [ ! -e $TARGET_DIR/soracom_MS2372 ]; then
   echo "cp ./ppp/peers/soracom_MS2372 $TARGET_DIR"
-  echo " peers config copied.. "
+  echo " -- peers config copied.. "
 else
-  echo " peers config already exists. nothing changed."
+  echo " -- peers config already exists. nothing changed."
 fi
 
 TARGET_DIR='/etc/chatscripts'
 if [ ! -e $TARGET_DIR/soracom_MS2372 ]; then
   echo "cp ./ppp/chatscript/soracom_MS2372 $TARGET_DIR"
-  echo " chatscript config copied.."
+  echo " -- chatscript config copied.."
 else
-  echo " chatscript config already exists. nothing changed."
+  echo " -- chatscript config already exists. nothing changed."
 fi
 
 TARGET_DIR='/etc/ppp/resolv'
