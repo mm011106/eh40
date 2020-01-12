@@ -59,14 +59,11 @@ if [ ! -e $TARGET_DIR/shutdwnSwitch.service ]; then
   echo "  found no Service file.  Generating file..."
 	#sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./shutdwnSwitch.service > $TARGET_DIR/shutdwnSwitch.service
 fi
-systemctl start shutdwnSwitch.service
-systemctl enable shutdwnSwitch.service
+systemctl start shutdwnSwitch.service && systemctl enable shutdwnSwitch.service
 echo "... Started"
 
 echo "Configure network interface..."
-echo "mv /etc/network/interfaces /etc/network/interfaces.BUP_$TIME_STAMP"
-echo "cp ./ppp/network/interfaces /etc/network"
+mv /etc/network/interfaces /etc/network/interfaces.BUP_$TIME_STAMP && cp ./ppp/network/interfaces /etc/network
 
 echo "Stopping swap service..."
-echo "systemctl stop dphys-swapfile.service"
-echo "systemctl disable dphys-swapfile.service"
+systemctl stop dphys-swapfile.service && systemctl disable dphys-swapfile.service
