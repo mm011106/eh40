@@ -51,16 +51,20 @@ if [ ! -e $TARGET_DIR/soracom.service ]; then
 	echo "  found no Service file.  Generating file..."
   sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./soracom.service > $TARGET_DIR/soracom.service
 fi
-systemctl start soracom.service && systemctl enable soracom.service
-echo "... Started"
+if [ ! `systemctl is-enabled soracom` = 'enabled' ]; then
+  systemctl start soracom.service && systemctl enable soracom.service
+  echo "... Started"
+fi
 
 echo "Start Shutdown Sw service..."
 if [ ! -e $TARGET_DIR/shutdwnSwitch.service ]; then
   echo "  found no Service file.  Generating file..."
 	sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./shutdwnSwitch.service > $TARGET_DIR/shutdwnSwitch.service
 fi
-systemctl start shutdwnSwitch.service && systemctl enable shutdwnSwitch.service
-echo "... Started"
+if [ ! `systemctl is-enabled shutdwnSwitch` = 'enabled' ]; then
+  systemctl start shutdwnSwitch.service && systemctl enable shutdwnSwitch.service
+  echo "... Started"
+fi
 
 echo "Configure network interface..."
 mv /etc/network/interfaces /etc/network/interfaces.BUP_$TIME_STAMP && cp ./ppp/network/interfaces /etc/network
