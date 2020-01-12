@@ -51,8 +51,7 @@ if [ ! -e $TARGET_DIR/soracom.service ]; then
 	echo "  found no Service file.  Generating file..."
   #sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./soracom.service > $TARGET_DIR/soracom.service
 fi
-systemctl start soracom.service
-systemctl enable soracom.service
+systemctl start soracom.service && systemctl enable soracom.service
 echo "... Started"
 
 echo "Start Shutdown Sw service..."
