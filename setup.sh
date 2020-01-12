@@ -42,17 +42,16 @@ else
 fi
 
 TARGET_DIR='/lib/systemd/system'
-TARGET_DIR='.'
 
 echo "Start detalogger service..."
-sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./soracom.service > $TARGET_DIR/soracom.txt
+#sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./soracom.service > $TARGET_DIR/soracom.service
 if [ -e $TARGET_DIR/soracom.service ]; then
 	systemctl start soracom.service
   systemctl enable soracom.service
 fi
 
 echo "Start Shutdown Sw service..."
-sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./shutdwnSwitch.service > $TARGET_DIR/shutdwnSwitch.txt
+#sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./shutdwnSwitch.service > $TARGET_DIR/shutdwnSwitch.service
 if [ -e $TARGET_DIR/shutdwnSwitch.service ]; then
 	systemctl start shutdwnSwitch.service
 	systemctl enable shutdwnSwitch.service
@@ -62,6 +61,6 @@ echo "Configure network interface..."
 echo "mv /etc/network/interfaces /etc/network/interfaces.BUP_$TIME_STAMP"
 echo "cp ./ppp/network/interfaces /etc/network"
 
-echo "Stopping swap..."
+echo "Stopping swap service..."
 echo "systemctl stop dphys-swapfile.service"
 echo "systemctl disable dphys-swapfile.service"
