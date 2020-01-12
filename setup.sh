@@ -66,6 +66,6 @@ echo "Configure network interface..."
 mv /etc/network/interfaces /etc/network/interfaces.BUP_$TIME_STAMP && cp ./ppp/network/interfaces /etc/network
 
 echo "Stopping swap service..."
-if [ ! `systemctl is-enabled dphys-swapfile` = 'disable' ]; then
+if [ ! `systemctl is-enabled dphys-swapfile` = 'disabled' ]; then
   systemctl stop dphys-swapfile.service && systemctl disable dphys-swapfile.service
 fi
