@@ -49,7 +49,7 @@ TARGET_DIR='/lib/systemd/system'
 echo "Start detalogger service..."
 if [ ! -e $TARGET_DIR/soracom.service ]; then
 	echo "  found no Service file.  Generating file..."
-  #sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./soracom.service > $TARGET_DIR/soracom.service
+  sed -e "s|##CURRENT_DIR##|$SCRIPT_DIR|g" ./soracom.service > $TARGET_DIR/soracom.service
 fi
 systemctl start soracom.service && systemctl enable soracom.service
 echo "... Started"
@@ -66,4 +66,6 @@ echo "Configure network interface..."
 mv /etc/network/interfaces /etc/network/interfaces.BUP_$TIME_STAMP && cp ./ppp/network/interfaces /etc/network
 
 echo "Stopping swap service..."
-systemctl stop dphys-swapfile.service && systemctl disable dphys-swapfile.service
+if [ ! `systemctl is-enabled dphys-swapfile` = 'disable' ]; then
+  systemctl stop dphys-swapfile.service && systemctl disable dphys-swapfile.service
+fi
