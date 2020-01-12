@@ -1,4 +1,13 @@
 #!/bin/bash
+#
+# setup internet connection by Soracom air SIM with MS-2372 USB dongle
+#  2020/1/12 miyamoto
+#
+#  need I2C bus must be enabled:
+#    raspi-config -> interface -> I2C
+#
+#  need pppconfig and python-smbus :
+#    apt install pppconfig python-smbus
 
 SCRIPT_DIR=$(cd $(dirname $0);pwd)
 TIME_STAMP=`date +%Y%m%d%H%M%S`
@@ -53,7 +62,7 @@ if [ ! -e $TARGET_DIR/soracom.service ]; then
 fi
 if [ ! `systemctl is-enabled soracom` = 'enabled' ]; then
   systemctl start soracom.service && systemctl enable soracom.service
-  echo "... Started"
+	echo "... Started"
 else
 	echo "... The service is already enabled"
 fi
