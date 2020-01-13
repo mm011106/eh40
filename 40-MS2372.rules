@@ -1,1 +1,0 @@
-ATTRS{../idVendor}=="12d1", ATTRS{../idProduct}=="1506", ATTRS{bNumEndpoints}=="03", ATTRS{bInterfaceNumber}=="00", SYMLINK+="ttyMS2372", ENV{SYSTEMD_WANTS}+="ifup@wwan0.service"
