@@ -23,6 +23,10 @@
   - ADSは差動　0−1:液面, 2−3：圧力計　
 - セットアップスクリプトを作成　必要なファイルをpppディレクトリに保管 2020/1/12
 
+## RaspberryPi の設定
+- 必要なパッケージ：　python-smbus, pppconfig
+- raspi-config で ssh, spi, i2c を有効にしておくこと
+
 ## ADS1115ドライバ　
 `ADS.py`
 - 基本ファンクション
