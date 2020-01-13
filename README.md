@@ -7,12 +7,13 @@
 - さらにSoracomでの通信が可能なようにする（雛形はすでにあり）
 
 ## 現状：
-- 2019/06 リリースできる状態：NYU向けに4GB-SDに入れてリリース
+- 2019/06 リリースできる状態：アメリカ向けに4GB-SDに入れてリリース
 - BME280はそれなりに出来上がった
-- ADS1115について、現在作成中
+- ADS1115
   - リードファンクションに計測完了のウエイトを入れる
 - 参考URL　https://github.com/ControlEverythingCommunity/ADS1115/blob/master/Python/ADS1115.py
 - 参考URL　https://github.com/adafruit/Adafruit_CircuitPython_ADS1x15/blob/master/adafruit_ads1x15/ads1x15.py
+- 2020/1/14　Rev01　として完成
 
 ## update!
 - shutdown sw のハンドリングスクリプトを吸収しました。　2019/06/28
@@ -20,8 +21,10 @@
 - ADS,BMEの両方を同時に読み取るように変更し、リリース版を作成  2019/4/7
   - EH-40のアンプ増幅率などを加味して、電圧をリードアウトするようにした
   - ADSは差動　0−1:液面, 2−3：圧力計　
+- セットアップスクリプトを作成　必要なファイルをｐｐｐディレクトリに保管 2020/1/12
 
-## ADS1115ドライバ
+## ADS1115ドライバ　
+`ADS.py`
 - 基本ファンクション
 	- ADS.init(bus, address) : デフォルト設定でイニシャライズ。一度測定する。
 	- ADS.readoutMulti(bus, address, readout_channels[] ) : 複数の（指定）チャネルを測定する。計測結果はリストで帰ってくる
@@ -30,6 +33,7 @@
 https://cdn-shop.adafruit.com/datasheets/ads1115.pdf
 
 ## BME280 ドライバ
+`bme280.py`
 - 基本ファンクション
 	- BME280.setup(bus, address) : イニシャライズ。
 	- BME280.readData(bus, address) : 測定、リストが帰ってくる（温度、気圧、湿度）。
