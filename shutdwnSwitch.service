@@ -1,0 +1,21 @@
+# this file should be located
+#  /lib/systemd/system/
+#
+# to activate this service:
+#    $ sudo systemctl enable shutdwnSw.service
+#
+# befor 'enable' this, you can test this as follows:
+#    $ sudo systemctl start shutdwnSw.service
+#    $ sudo systemctl stop shutdwnSw.service
+
+
+[Unit]
+Description=Shutdown Switch watcher
+
+[Service]
+ExecStart =/usr/bin/python2.7 ##CURRENT_DIR##/shutdwnSwitch.py
+Restart=always
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
